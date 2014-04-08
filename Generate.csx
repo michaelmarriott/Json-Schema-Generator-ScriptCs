@@ -5,8 +5,6 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 
-var jsonSchemaGenerator = new JsonSchemaGenerator();
-Assembly assembly = Assembly.LoadFrom(Env.ScriptArgs[0]);
 Console.WriteLine(@"    
      ____.                       _________      .__                           
     |    | __________   ____    /   _____/ ____ |  |__   ____   _____ _____   
@@ -27,20 +25,25 @@ Console.WriteLine(@"
 /_______  /\___  >__|  |__|   __/|__|   \______  /____  >
         \/     \/         |__|                 \/     \/ ");
 
+var jsonSchemaGenerator = new JsonSchemaGenerator();
+Assembly assembly = Assembly.LoadFrom(Env.ScriptArgs[0]);
+
+var folder = (Env.ScriptArgs.Count > 1) ? Env.ScriptArgs[1] : "";
+
 foreach (Type type in assembly.GetTypes()) {
 	foreach (var jsonObjectType in type.GetCustomAttributes()) {
 		if (jsonObjectType.ToString().Equals("Newtonsoft.Json.JsonObjectAttribute")) {
-		Console.WriteLine("Creating file for " + type.Name);
-		var schema = jsonSchemaGenerator.Generate(type);
-		schema.Title = type.Name; 
-		var writer = new StringWriter();
-		var jsonTextWriter = new JsonTextWriter(writer);
-		schema.WriteTo(jsonTextWriter);
-		var parsedJson = JsonConvert.DeserializeObject(writer.ToString());
-		var prettyString = JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
-		var fileWriter = new StreamWriter(schema.Title + ".json");
-		fileWriter.WriteLine(prettyString);
-		fileWriter.Close();
+			Console.WriteLine("Creating file for " + type.Name);
+			var schema = jsonSchemaGenerator.Generate(type);
+			schema.Title = type.Name; 
+			var writer = new StringWriter();
+			var jsonTextWriter = new JsonTextWriter(writer);
+			schema.WriteTo(jsonTextWriter);
+			var parsedJson = JsonConvert.DeserializeObject(writer.ToString());
+			var prettyString = JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+			var fileWriter = new StreamWriter(Path.Combine(folder,String.Format("{0}.json",schema.Title)));
+			fileWriter.WriteLine(prettyString);
+			fileWriter.Close();
 		}
 	}
 }

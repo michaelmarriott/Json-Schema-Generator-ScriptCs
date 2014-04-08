@@ -14,7 +14,7 @@ Creates a Json Schema of all Models implementing JsonObjectAttibute from Newtons
 ```
 
 **Execute**
-  scriptcs Generate.csx -- "MyTest/bin/MyTest.dll"
+  scriptcs Generate.csx -- "MyTest/bin/MyTest.dll" "SchemaFolder"
   
   
 ##SetUp
@@ -26,5 +26,8 @@ Install Newtonsoft.Json
  
 ##Executing
 
-scriptcs Generate.csx -- "{**path of dll**}"
+scriptcs Generate.csx -- "{**path of dll**}" "{**destination folder**}"
 
+##Copyright and License
+
+Licensed under the Apache License
