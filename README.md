@@ -4,7 +4,7 @@
 Creates a Json Schema of all Models implementing JsonObjectAttibute from Newtonsoft.Json package.
 
 **Example: **
-*In MyTest.dll a file MyTest.cs contains the following*
+*In MyTest.dll a file MyTest.cs contains the following*:
 
 ```C#
   [JsonObject]
@@ -14,7 +14,7 @@ Creates a Json Schema of all Models implementing JsonObjectAttibute from Newtons
 ```
 
 **Execute**
-  scriptcs Generate.csx -- "{**path of dll**}"
+  scriptcs Generate.csx -- "MyTest/bin/MyTest.dll"
   
   
 ##SetUp
@@ -24,7 +24,7 @@ Install and setup up scriptcs [SciptCs][http://scriptcs.net/]
 Install Newtonsoft.Json 
  *scriptcs -install Newtonsoft.Json*
  
-##To Execute
+##Executing
 
 scriptcs Generate.csx -- "{**path of dll**}"
 
